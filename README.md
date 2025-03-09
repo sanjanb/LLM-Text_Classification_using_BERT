@@ -3,6 +3,38 @@
 ## Abstract
 This paper explores the architecture, training process, and biases associated with BERT (Bidirectional Encoder Representations from Transformers), a transformative model in natural language processing (NLP). We delve into the components of BERT, its training methodologies, and the challenges posed by biases in its predictions.
 
+## Table of Contents
+1. [Introduction](#introduction)
+2. [BERT Architecture](#bert-architecture)
+    - [Components](#components)
+    - [Tokenization](#tokenization)
+3. [Training BERT](#training-bert)
+    - [Training Datasets](#training-datasets)
+    - [Training Tasks](#training-tasks)
+    - [Compute Resources](#compute-resources)
+4. [Transfer Learning with BERT](#transfer-learning-with-bert)
+    - [Components](#components-1)
+    - [Resources](#resources)
+    - [Benefits](#benefits)
+5. [Biases in BERT](#biases-in-bert)
+    - [Gender Bias in Predictions](#gender-bias-in-predictions)
+    - [Implications of Bias](#implications-of-bias)
+    - [Mitigation Strategies](#mitigation-strategies)
+6. [Fine-Tuning BERT for Text Classification](#fine-tuning-bert-for-text-classification)
+    - [IMDB Dataset](#imdb-dataset)
+    - [Adding a Linear Classifier](#adding-a-linear-classifier)
+    - [Dropout Layer](#dropout-layer)
+    - [Training Process](#training-process)
+7. [Experimental Setup](#experimental-setup)
+    - [Hugging Face Libraries](#hugging-face-libraries)
+    - [Data Preparation](#data-preparation)
+    - [Visualizing Data](#visualizing-data)
+8. [Results](#results)
+    - [Training and Evaluation](#training-and-evaluation)
+    - [Inference](#inference)
+9. [Conclusion](#conclusion)
+10. [References](#references)
+
 ## Introduction
 BERT has revolutionized the field of NLP by providing a robust framework for understanding and generating human language. This paper aims to provide a comprehensive overview of BERT's architecture, training process, and the challenges posed by biases in its predictions.
 
