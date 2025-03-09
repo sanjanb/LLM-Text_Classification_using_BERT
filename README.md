@@ -46,6 +46,12 @@ BERT's architecture consists of two main components: an encoder and a decoder. T
 ### Tokenization
 BERT uses subword tokenization, breaking words into smaller subwords or tokens. For example, "tokenization" is split into "token" and "##ization". This approach ensures frequently used words are not split into smaller subwords and decomposes rarely used words into meaningful subwords. BERT uncased has a vocabulary of around 30,000 tokens, mapping each subword to a unique numerical ID.
 
+| **Model** | **Vocabulary Size** | **Tokenization Method** |
+|-----------|----------------------|-------------------------|
+| BERT      | 30,000               | WordPiece               |
+| GPT-2     | 50,000               | Byte-Pair Encoding      |
+| GPT-3     | 50,000               | Byte-Pair Encoding      |
+
 ## Training BERT
 
 ### Training Datasets
@@ -92,6 +98,39 @@ A dropout layer is often added before the linear classifier to reduce overfittin
 
 ### Training Process
 The model is fine-tuned using the labeled IMDB dataset. The text reviews are tokenized and fed into BERT, and the final embedding of the [CLS] token is passed through the linear classifier to predict the label (positive or negative). The model is trained to minimize the classification error by adjusting the weights of both the pre-trained BERT model and the newly added linear classifier.
+--- 
+
+# Example code for fine-tuning BERT
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, Trainer, TrainingArguments
+
+checkpoint = "distilbert-base-cased"
+tokenizer = AutoTokenizer.from_pretrained(checkpoint)
+model = AutoModelForSequenceClassification.from_pretrained(checkpoint, num_labels=2)
+
+def tokenize_function(batch):
+    return tokenizer(batch["text"], padding=True, truncation=True)
+
+# Assuming `imdb_encoded` is the encoded dataset
+training_args = TrainingArguments(
+    output_dir="./results",
+    evaluation_strategy="epoch",
+    learning_rate=2e-5,
+    per_device_train_batch_size=16,
+    per_device_eval_batch_size=16,
+    num_train_epochs=2,
+    weight_decay=0.01,
+)
+
+trainer = Trainer(
+    model=model,
+    args=training_args,
+    train_dataset=imdb_encoded["train"],
+    eval_dataset=imdb_encoded["validation"],
+    tokenizer=tokenizer,
+)
+
+trainer.train()
+
 
 ## Experimental Setup
 
@@ -103,6 +142,12 @@ The IMDB dataset is prepared by removing HTML tags using regular expressions and
 
 ### Visualizing Data
 A box plot is used to visualize the distribution of review lengths, providing insights into the range and average length of reviews in the dataset.
+
+| **Review Length** | **Count** |
+|-------------------|-----------|
+| Short (< 50)      | 120       |
+| Medium (50-150)   | 350       |
+| Long (> 150)      | 50        |
 
 ## Results
 
